@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="receptor-evento">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+    <h3>Soy el receptor</h3>
+    <h3>Este curso es [[course]]</h3>
+    <h3>y estamos en el año [[year]]</h3>
+    <input type="text" value="{{course::input}}"></input>
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class ReceptorEvento extends Polymer.Element {
+      static get is() { return 'receptor-evento'; }
+      static get properties() {
+        return {
+          course:{
+            type: String,
+            observer: '_courseChanged'
+          }, year: {
+            type:String
+          }
+        };
+      }
+
+      _courseChanged(newValue, oldValue) {
+        console.log("El valor de course ha cambiado");
+        console.log("Valor nuevo " + newValue);
+        console.log("Valor antiguo " + oldValue);
+      }
+    }
+
+    window.customElements.define(ReceptorEvento.is, ReceptorEvento);
+  </script>
+</dom-module>

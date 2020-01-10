@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="login-usuario">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+    <!-- <h2>Hello [[prop1]]!</h2> -->
+    <!-- Asignamos el valor de un propiedad definida en JS a un elemento HTML
+        (Data Binding, One Way '[[ ]]'  Two Ways {{}}  -->
+
+    <input placeholder="email" type="email" value="{{email::input}}"></input>
+    <input placeholder="password" type="password" value="{{password::input}}"></input>
+    <button on-click="login">Login</button>
+    <span hidden$="{{!isLogged}}">Bienvenido de nuevo!</span>
+    <!-- login en este caso es funcion manejadora, y la hemos asociado al evento on-click -->
+
+    <!--  <input type="text" value="{{first_name::input}}" />  -->
+    <!-- las etiquetas que no tienen cuerpo se pueden autocerrar -->
+    <!-- al ser two ways si escribimos otro nombre en el formulario el cambio ha de propagarse,
+    pero ha de ponerse ::input para que escuche ese evento input ya que es un
+     elemento nativo y por defecto polymer espera un evento change -->
+     <!-- <input type="range" min="18" value="{{age::input}}" max="99" />  -->
+
+     <iron-ajax
+     id="doLogin"
+     url="http://localhost:3000/apitechu/v2/login"
+     handle-as="json"
+     content-type="application/json"
+     method="POST"
+     on-response="manageAJAXResponse"
+     on-error="showError"
+     />
+     <!-- content-type es para indicarle que el body es un json (mimetype)
+        el metodo por defecto es GET
+       error es cualquier mensaje 400 o 500  -->
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class LoginUsuario extends Polymer.Element {
+      static get is() { return 'login-usuario'; }
+      static get properties() {
+        return {
+          password:{
+            type: String
+          }, email:{
+            type: String
+          }, isLogged:{
+            value:false,
+            type:Boolean
+          }
+      };
+    }
+
+/** funcion manejadora del elemento iron-ajax; hay que ponerla dentro de class*/
+      login () {
+        console.log("El usuario ha pulsado el botón");
+        console.log("Voy a enviar la petición");
+
+        var loginData= {
+          "email": this.email,
+          "password" : this.password
+        };
+
+        this.$.doLogin.body = JSON.stringify(loginData);
+        // el $ hace referencia al arbol del shadowDOM (magia)
+        this.$.doLogin.generateRequest();
+
+        console.log("Petición enviada");
+      }
+
+      manageAJAXResponse (data) {
+        console.log("Llegaron los resultados de la API");
+        console.log(data.detail.response);
+
+        // cuando llegamos aqui consideramos que el login es correcto, pq nos
+        // devuelve algo que no es un error
+        this.isLogged=true;
+        window.location="user/" + data.detail.response.idUsuario;
+        // idUsuario es una propiedad que tendremos que definir para que la API
+        // nos devuelva. ?donde? en la Authcontroller loginV2
+      }
+
+      showError (error) {
+        console.log("Ha habido un error");
+        console.log(error);
+        this.isLogged=false;
+      }
+
+// asignamos mis propiedades a las que me devuelve la API (que en este caso se llaman igual)
+// this es un objeto que se refiere a si mismo, se refiere a la clase VisorUsuario
+
+      }
+
+
+    window.customElements.define(LoginUsuario.is, LoginUsuario);
+  </script>
+</dom-module>

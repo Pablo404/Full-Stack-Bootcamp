@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="cuenta-userid">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+    <h2>Bienvenido a su banco</h2>
+    <!-- Asignamos el valor de un propiedad definida en JS a un elemento HTML
+        (Data Binding, One Way '[[ ]]'  Two Ways {{}}  -->
+
+    <!-- <input placeholder="email" type="email" value="{{email::input}}"></input>  -->
+    <input placeholder="USER ID" type="Number" value="{{userid::input}}"></input>
+    <button on-click="goToAccount">Ver mi cuenta</button>
+    <!-- <span hidden$="{{!isLogged}}">Bienvenido de nuevo!</span> -->
+    <!-- login en este caso es funcion manejadora, y la hemos asociado al evento on-click -->
+
+    <!--  <input type="text" value="{{first_name::input}}" />  -->
+    <!-- las etiquetas que no tienen cuerpo se pueden autocerrar -->
+    <!-- al ser two ways si escribimos otro nombre en el formulario el cambio ha de propagarse,
+    pero ha de ponerse ::input para que escuche ese evento input ya que es un
+     elemento nativo y por defecto polymer espera un evento change -->
+     <!-- <input type="range" min="18" value="{{age::input}}" max="99" />  -->
+
+     <!-- <iron-ajax
+     id="doLogin"
+     url="http://localhost:3000/apitechu/v2/login"
+     handle-as="json"
+     content-type="application/json"
+     method="POST"
+     on-response="manageAJAXResponse"
+     on-error="showError"
+     /> -->
+     <!-- content-type es para indicarle que el body es un json (mimetype)
+        el metodo por defecto es GET
+       error es cualquier mensaje 400 o 500  -->
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class CuentaUserId extends Polymer.Element {
+      static get is() { return 'cuenta-userid'; }
+      static get properties() {
+        return {
+          userid :{
+            type: Number
+          }
+      };
+    }
+
+/** funcion manejadora del elemento iron-ajax; hay que ponerla dentro de class*/
+      goToAccount () {
+        console.log("Vamos a mi cuenta");
+
+
+        window.location="account/" + this.userid;
+        // idUsuario es una propiedad que tendremos que definir para que la API
+        // nos devuelva. ?donde? en la Authcontroller loginV2
+      }
+    }
+
+
+
+    window.customElements.define(CuentaUserId.is, CuentaUserId);
+  </script>
+</dom-module>

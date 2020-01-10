@@ -1,0 +1,94 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="frontproyecto-app">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      /* border: solid blue; */
+      /* all: initial; */
+      /* estamos reseteando todos los estilos que puedan heredarse o venir de fuera */
+
+      }
+      .redbg {
+        background-color: red;
+      }
+
+      .greenbg {
+        background-color:green;
+      }
+
+      .bluebg {
+        background-color: blue;
+      }
+
+      .greybg {
+        background-color: grey;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <div class="row greybg">
+      <div class="col-2 offset-1 col-sm-3 redbg">Col red</div>
+      <div class="col-1 offset-3 col-sm-3 greenbg">Col green</div>
+      <div class="col-1 col-sm-1 bluebg">Col blue</div>
+    </div>
+
+    <button class="btn-primary btn-lg">Login</button>
+    <button class="btn-secondary btn-sm">Logout</button>
+    <button class="btn-success">Login</button>
+    <button class="btn-info">Logout</button>
+    <button class="btn-danger">Login</button>
+    <button class="btn-warning">Logout</button>
+    <button class="btn-light">Login</button>
+    <button class="btn-dark">Logout</button>
+
+
+    <h2>Hello [[prop1]]!</h2>
+    <!-- Asignamos el valor de un propiedad definida en JS a un elemento HTML
+        (Data Binding, One Way '[[ ]]'  Two Ways {{}}  -->
+
+    <h2>Soy [[first_name]] [[last_name]]</h2>
+    <h3>y tengo [[age]] años</h3>
+
+    <input type="text" value="{{first_name::input}}" />
+    <!-- las etiquetas que no tienen cuerpo se pueden autocerrar -->
+    <!-- al ser two ways si escribimos otro nombre en el formulario el cambio ha de propagarse,
+    pero ha de ponerse ::input para que escuche ese evento input ya que es un
+     elemento nativo y por defecto polymer espera un evento change -->
+     <input type="range" min="18" value="{{age::input}}" max="99" />
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class FrontproyectoApp extends Polymer.Element {
+      static get is() { return 'frontproyecto-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'Pablo Celada'
+          }, first_name:{
+            type: String
+          }, last_name: {
+            type: String
+          }, age:{
+            type:Number
+          },
+          id :{
+            type:Number
+          }
+        };
+      }
+    }
+
+    window.customElements.define(FrontproyectoApp.is, FrontproyectoApp);
+  </script>
+</dom-module>

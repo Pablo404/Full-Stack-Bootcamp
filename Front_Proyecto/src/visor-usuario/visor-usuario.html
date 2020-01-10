@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="visor-usuario">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <!-- Asignamos el valor de un propiedad definida en JS a un elemento HTML
+        (Data Binding, One Way '[[ ]]'  Two Ways {{}}  -->
+
+    <h2>Soy [[first_name]] [[last_name]]</h2>
+    <h3>y mi email es [[email]] </h3>
+
+    <!--  <input type="text" value="{{first_name::input}}" />  -->
+    <!-- las etiquetas que no tienen cuerpo se pueden autocerrar -->
+    <!-- al ser two ways si escribimos otro nombre en el formulario el cambio ha de propagarse,
+    pero ha de ponerse ::input para que escuche ese evento input ya que es un
+     elemento nativo y por defecto polymer espera un evento change -->
+     <!-- <input type="range" min="18" value="{{age::input}}" max="99" />  -->
+
+     <iron-ajax auto
+     id="getUser"
+     url="http://localhost:3000/apitechu/v2/users/{{id}}"
+     handle-as="json"
+     on-response="showData"
+     />
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class VisorUsuario extends Polymer.Element {
+      static get is() { return 'visor-usuario'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'Pablo Celada'
+          }, first_name:{
+            type: String
+          }, last_name: {
+            type: String
+          }, age:{
+            type:Number
+          },
+          email: {
+            type:String
+          }, id: {
+            type:Number
+          }
+        };
+      }
+
+/** funcion manejadora del elemento iron-ajax; hay que ponerla dentro de class*/
+      showData (data) {
+        console.log("showData");
+        console.log(data.detail.response);
+
+// asignamos mis propiedades a las que me devuelve la API (que en este caso se llaman igual)
+// this es un objeto que se refiere a si mismo, se refiere a la clase VisorUsuario
+        this.first_name = data.detail.response.first_name;
+        this.last_name = data.detail.response.last_name;
+        this.email = data.detail.response.email;
+      }
+    }
+
+    window.customElements.define(VisorUsuario.is, VisorUsuario);
+  </script>
+</dom-module>

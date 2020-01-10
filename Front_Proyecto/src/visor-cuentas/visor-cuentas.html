@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html" />
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html" />
+
+<dom-module id="visor-cuentas">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+  <!--  <h2>Hello [[first_name]] [[last_name]]!</h2> -->
+  <template is="dom-repeat" items="{{accounts}}">
+    <h2>Su numero de cuenta (IBAN) es {{item.IBAN}}</h2>
+    <h2>y su saldo es {{item.balance}} €</h2>
+  </br>
+
+  </template>
+    <image src='../photo.jpg' width="400" height="400"></image>
+    <!-- Asignamos el valor de un propiedad definida en JS a un elemento HTML
+        (Data Binding, One Way '[[ ]]'  Two Ways {{}}  -->
+<!--
+    <h2>Soy [[first_name]] [[last_name]]</h2>
+    <h3>y mi email es [[email]] </h3>
+-->
+    <!--  <input type="text" value="{{first_name::input}}" />  -->
+    <!-- las etiquetas que no tienen cuerpo se pueden autocerrar -->
+    <!-- al ser two ways si escribimos otro nombre en el formulario el cambio ha de propagarse,
+    pero ha de ponerse ::input para que escuche ese evento input ya que es un
+     elemento nativo y por defecto polymer espera un evento change -->
+     <!-- <input type="range" min="18" value="{{age::input}}" max="99" />  -->
+
+     <iron-ajax auto
+     id="getAccount"
+     url="http://localhost:3000/apitechu/accounts/{{userid}}"
+     handle-as="json"
+     on-response="showData"
+     />
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class VisorCuentas extends Polymer.Element {
+      static get is() { return 'visor-cuentas'; }
+      static get properties() {
+        return {
+           first_name:{
+            type: String
+          }, last_name: {
+            type: String
+          },
+           userid: {
+            type:Number
+          },
+        /*  IBAN : {
+            type: String
+          },
+          balance : {
+            type: Number
+          } */
+          // no me hace falta definir estas propiedades ahora que tengo dom-repeat
+          accounts: {
+            type: Array
+          }
+        };
+      }
+
+/** funcion manejadora del elemento iron-ajax; hay que ponerla dentro de class*/
+    /*   antes del dom-repeat
+     showData (data) {
+        console.log("showData");
+        console.log(data.detail.response[0]);
+
+
+
+
+
+// asignamos mis propiedades a las que me devuelve la API (que en este caso se llaman igual)
+// this es un objeto que se refiere a si mismo, se refiere a la clase VisorUsuario
+        this.IBAN = data.detail.response[0].IBAN;
+        this.userid = data.detail.response[0].userId;
+        this.balance = data.detail.response[0].balance;
+      } */
+
+// para el dom-repeat
+
+      showData (data) {
+        console.log("showData");
+        console.log(data.detail.response);
+
+
+
+
+
+// asignamos mis propiedades a las que me devuelve la API (que en este caso se llaman igual)
+// this es un objeto que se refiere a si mismo, se refiere a la clase VisorUsuario
+        this.accounts = data.detail.response;
+
+      }
+    }
+
+    window.customElements.define(VisorCuentas.is, VisorCuentas);
+  </script>
+</dom-module>

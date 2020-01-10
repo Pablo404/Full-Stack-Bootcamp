@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>frontproyecto</title>
+    <meta name="description" content="Api molona.">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <!-- <link rel="import" href="/src/frontproyecto-app/frontproyecto-app.html">
+    <link rel="import" href="/src/visor-usuario/visor-usuario.html">
+    <link rel="import" href="/src/login-usuario/login-usuario.html">
+    <link rel="import" href="/src/page-not-found/page-not-found.html"> -->
+<link rel="import" href="/bower_components/app-router/app-router.html" />
+<link rel="import" href="/src/visor-cuentas/visor-cuentas.html" />
+<link rel="import" href="/src/cuenta-userid/cuenta-userid.html" />
+<link rel="import" href="/src/test-iron-pages/test-iron-pages.html" />
+<link rel="import" href="/src/emisor-evento/emisor-evento.html" />
+<link rel="import" href="/src/gestor-evento/gestor-evento.html" />
+<link rel="import" href="/src/receptor-evento/receptor-evento.html" />
+
+    <!-- <style>
+      .test {
+        border: solid red;
+      }
+    </style> -->
+  </head>
+  <body>
+    <!-- esto es un componente polymer -->
+    <!-- <frontproyecto-app first_name="Pablo" last_name="Celada" age=24 ></frontproyecto-app> -->
+    <!-- <visor-usuario id="31"></visor-usuario> -->
+    <!-- <login-usuario></login-usuario> -->
+    <!-- esto es HTML plano -->
+    <!-- <h1>Bienvenido a su banco</h1>
+    <a href="/login"><button>Login</button></a>
+    <a href="/vercuenta"><button>Ver mi cuenta</button></a> -->
+    <!-- <visor-cuentas userid="10"></visor-cuentas> -->
+  <!--  <app-router>
+      <app-route path="/"></app-route>
+      <app-route path="/login"
+      import="/src/login-usuario/login-usuario.html"></app-route>
+      <app-route path="/user/:id"
+      import="/src/visor-usuario/visor-usuario.html"></app-route>
+      <app-route path="/account/:userid"
+      import="/src/visor-cuentas/visor-cuentas.html"></app-route>
+      <app-route path="/vercuenta"
+      import="/src/cuenta-userid/cuenta-userid.html"></app-route>
+      <app-route path="*"
+      import="/src/page-not-found/page-not-found.html"></app-route>
+    </app-router> -->
+    <!-- <test-iron-pages></test-iron-pages> -->
+    <!-- <emisor-evento></emisor-evento> -->
+    <gestor-evento></gestor-evento>
+    <!-- <receptor-evento></receptor-evento> -->
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="emisor-evento">
+  <!-- esta parte es HTML -->
+  <template>
+    <style>
+    /** esto es CSS */
+      :host {
+      display: block;
+      }
+    </style>
+    <h3>Soy el emisor</h3>
+    <button on-click="sendEvent">No pulsar</button>
+  </template>
+
+  <script>
+    /** esto es JavaScript
+     * @customElement
+     * @polymer
+     */
+    class EmisorEvento extends Polymer.Element {
+      static get is() { return 'emisor-evento'; }
+      static get properties() {
+        return {
+
+        };
+      }
+
+      sendEvent(e) {
+        console.log("Se ha pulsado el botón");
+        console.log(e);
+
+        this.dispatchEvent(
+          // estamos pasando como parametro un evento
+          new CustomEvent(
+            "myevent",
+            {
+                "detail": {
+                  "course": "TechU",
+                  "year": 2018
+                }
+            }
+          )
+        )
+      }
+    }
+
+    window.customElements.define(EmisorEvento.is, EmisorEvento);
+  </script>
+</dom-module>
