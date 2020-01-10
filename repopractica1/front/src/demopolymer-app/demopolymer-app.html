@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="demopolymer-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <h3>Mi valor es [[prop2]]</h3>
+    <button on-click="demo">Demoar</button>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class DemopolymerApp extends Polymer.Element {
+      static get is() { return 'demopolymer-app'; }
+      demo() {
+        this.prop2 = 12345;
+      }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'demopolymer-app'
+          },
+          prop2: {
+            type: Number,
+            value: 999
+          }
+        };
+      }
+    }
+
+    window.customElements.define(DemopolymerApp.is, DemopolymerApp);
+  </script>
+</dom-module>

@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="angel-visor">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="container">
+      <div class="row">
+
+    <img class="col-lg-8 col-xs-12" src="https://image.flaticon.com/icons/svg/626/626602.svg" />
+    <button on-click="incrementar" class="col-lg-4 col-xs-12 btn btn-danger">Cargar datos</button>
+    <input type="text" placeholder="[[prop3]]" value="{{prop1::input}}" />
+    <table class="table table-striped col-lg-12 col-xs-12">
+      <thead>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[[prop2]]</td>
+          <td>Doraemon</td>
+          <td>García</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Nobita</td>
+          <td>García</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class AngelVisor extends Polymer.Element {
+      static get is() { return 'angel-visor'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String
+          },
+          prop2: {
+            type: Number,
+            value: 999
+          },
+          prop3: {
+            type: String,
+            value: 'Indique su login'
+          }
+        };
+      }
+      incrementar()
+      {
+        this.prop2 = this.prop2 + 1;
+        console.log(this.prop1);
+        console.log(this.prop2);
+      }
+    }
+
+    window.customElements.define(AngelVisor.is, AngelVisor);
+  </script>
+</dom-module>

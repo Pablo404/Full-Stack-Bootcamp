@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html" />
+
+<dom-module id="gestor-clientes">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        padding: 10px;
+      }
+    </style>
+    <div class="container">
+    <div class="row">
+      <h1 class="col-lg-12">Gestor de clientes</h1>
+      <button on-click="obtenerClientes">Obtener clientes</button>
+      <table hidden$="{{noCargados}}">
+        <tbody>
+          <template is="dom-repeat" items="{{clientes}}">
+            <tr>
+              <td>
+                [[item.idcliente]]
+              </td>
+              <td>
+                [[item.nombre]]
+              </td>
+              <td>
+                [[item.apellidos]]
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    </div>
+  </template>
+  <script>
+
+  class GestorClientes extends Polymer.Element {
+    static get is() { return 'gestor-clientes'; }
+    static get properties() {
+      return {
+        clientes: {
+          type: Array,
+          notify: true
+        },
+        noCargados: {
+          type: Boolean,
+          value: true
+        }
+      };
+    }
+    obtenerClientes() {
+      var request = new XMLHttpRequest();
+      request.open("GET", "http://servidorback/clientes", false);
+      request.setRequestHeader("Accept", "application/json");
+      request.send();
+      this.clientes = JSON.parse(request.responseText).value;
+      console.log(this.clientes);
+      this.noCargados = false;
+    }
+    anadirCliente() {
+      var request = new XMLHttpRequest();
+      request.open("POST", "http://servidorback/clientes", false);
+      request.setRequestHeader("Accept", "application/json");
+      request.setRequestHeader("Content-Type", "application/json");
+      var nuevoCliente = {"idcliente":"12345","nombre":"Pepe","apellido":"Garcia"};
+      var body = JSON.stringify(nuevoCliente);
+      request.send(body);
+      this.respuesta = request.responseText;
+      console.log(this.respuesta);
+      this.noCargados = false;
+    }
+  }
+  window.customElements.define(GestorClientes.is, GestorClientes);
+  </script>
+</dom-module>
